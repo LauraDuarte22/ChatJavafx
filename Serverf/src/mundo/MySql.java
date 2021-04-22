@@ -114,12 +114,21 @@ public class MySql {
             id = rst.getString("Id_User");
 
         }
-        System.out.println("eh");
         String sql = "INSERT INTO msg ( nickSend, nickreceived, msg, Id_User ) "
                 + "VALUES ('" + nickSend + "','" + nickreceived + "','" + msg + "', " + Integer.parseInt(id) + ")";
         statement.executeUpdate(sql);
     }
 
-  
+    public void showMsg(String nick) throws SQLException {
+        this.statement = connect().createStatement();
+        String id = "SELECT Id_User FROM users WHERE nick ='" + nick + "'";
+        this.rst = statement.executeQuery(id);
+        while (rst.next()) {
+            id = rst.getString("Id_User");
+
+        }
+        String sql = "SELECT msg, nickSend FROM msg WHERE Id_User=" + id;
+
+    }
 
 }

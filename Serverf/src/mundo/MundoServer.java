@@ -59,9 +59,12 @@ public class MundoServer {
                                 System.out.println(msj);
                                 char tipo = msj.charAt(0);
                                 String arr[] = msj.split("\\*");
+                                String msjServer = "";
                                 switch (tipo) {
                                     case '0':
                                         mySql.saveMsg(arr[1], arr[2], arr[3]);
+                                        msjServer = "Mensaje enviado por: " + arr[1] + " para: " + arr[2] + " msj:  " + arr[3];
+                                        msj=arr[3];
                                         break;
                                     case '1':
                                         boolean exist = mySql.verificarUser(arr[1]);
@@ -71,17 +74,21 @@ public class MundoServer {
                                             mySql.updateIp(arr[1], arr[2]);
                                             mySql.updateEstado(arr[1], "TRUE");
                                         }
+                                        msjServer = "Usuario ingresado: " + arr[1];
                                         break;
                                     case '2':
                                         mySql.updateEstado(arr[1], "FALSE");
+                                        msjServer = "Estado de usuario " + arr[1] + " actualizado";
                                         break;
                                     case '3':
-                                        msj = tipo + mySql.selectUsers(arr[1]);
+                                        String users = mySql.selectUsers(arr[1]);
+                                        msj = tipo + users;
+                                        msjServer = "Usarios disponibles para enviar mensajes \n" + users.replace("*", "\n");
                                         break;
                                     default:
                                         break;
                                 }
-                                ctrl.recibirMensaje(msj);
+                                ctrl.recibirMensaje(msjServer);
                                 socket(msj);
                                 socket.close();
                             } catch (IOException | SQLException ex) {

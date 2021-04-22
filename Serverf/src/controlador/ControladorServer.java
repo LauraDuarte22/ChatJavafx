@@ -31,7 +31,7 @@ public class ControladorServer {
     }
 
     public void recibirMensaje(String msg) {
-        pnlConversacion.mostrarMensaje("Client: " + msg);
+        pnlConversacion.mostrarMensaje(msg);
 
     }
 
