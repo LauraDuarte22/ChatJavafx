@@ -1,0 +1,13 @@
+.enviado{
+    -fx-padding: 8 15 8 15;
+    -fx-background-color:#00D0EA;
+    -fx-text-fill:white;
+    -fx-background-radius: 10 10 0 10;
+
+}
+
+.recibido{
+    -fx-padding: 8 15 8 15;
+    -fx-background-color:#E7E8E8;
+    -fx-background-radius: 0 10 10 10;
+}
