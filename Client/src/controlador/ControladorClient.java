@@ -45,7 +45,6 @@ public class ControladorClient {
     }
 
     public void enviarMensaje(int tipo, String msg) {
-        System.out.println("monda: "+msg);
         if (msg.split("\\*").length == 2 && tipo == 0) {
             msg += " ";
         }

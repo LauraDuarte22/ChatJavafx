@@ -46,7 +46,7 @@ public class InterfazApp extends Application {
 
         pnlConversacion = new PanelConversacion(ctrl, pnlEnviar);
         pnlRegistro = new PanelRegistro(ctrl);
-        pnlUsuarios = new PanelUsuarios(ctrl, pnlRegistro);
+        pnlUsuarios = new PanelUsuarios(ctrl, pnlRegistro,pnlConversacion);
         pnlEnviar = new PanelEnviar(pnlConversacion, ctrl, pnlUsuarios, pnlRegistro);
         root.setPadding(new Insets(5, 5, 5, 5));
         root.setTop(pnlUsuarios.areas);

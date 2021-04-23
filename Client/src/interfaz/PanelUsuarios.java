@@ -9,10 +9,8 @@ import controlador.ControladorClient;
 import javafx.application.Platform;
 import javafx.beans.value.ChangeListener;
 import javafx.beans.value.ObservableValue;
-import javafx.event.ActionEvent;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
-import javafx.event.EventType;
 import javafx.geometry.HPos;
 import javafx.scene.control.Button;
 import javafx.scene.control.ComboBox;
@@ -31,15 +29,16 @@ public class PanelUsuarios {
     protected Button btn;
     protected GridPane areas;
     private ControladorClient ctrl;
-    private ComboBox cbUsuarios;
     public ComboBox cbUsuariosCreados;
     public Label labelPara;
     public PanelRegistro pnlRegistro;
     private ObservableList<String> users;
+    private PanelConversacion pnlConversacion;
 
-    public PanelUsuarios(ControladorClient ctrl, PanelRegistro pnlRegistro) {
+    public PanelUsuarios(ControladorClient ctrl, PanelRegistro pnlRegistro, PanelConversacion pnlConversacion) {
         this.ctrl = ctrl;
         this.pnlRegistro = pnlRegistro;
+        this.pnlConversacion = pnlConversacion;
         areas = new GridPane();
         //Cuadrícula De - Para
         ColumnConstraints cc = new ColumnConstraints();
@@ -85,19 +84,23 @@ public class PanelUsuarios {
             public void changed(ObservableValue<? extends String> observable, String oldValue, String newValue) {
                 // If the condition is not met and the new value is not null: "rollback"
                 if (newValue != null) {
-
-                    Platform.runLater(new Runnable() {  
+                    if(oldValue != newValue){
+                        pnlConversacion.grid.getChildren().clear();
+                    }
+                    Platform.runLater(new Runnable() {
                         @Override
                         public void run() {
                             verMensajes();
+                            
                         }
                     });
                 }
+                
             }
         });
         cbUsuariosCreados.setPrefSize(150, 5);
         areas.add(cbUsuariosCreados, 1, 0);
-  
+
     }
 
     public void verMensajes() {
