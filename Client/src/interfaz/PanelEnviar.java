@@ -72,8 +72,8 @@ public class PanelEnviar {
         userSend = pnlRegistro.user;
         userRecibe = (String) pnlUsuarios.cbUsuariosCreados.getValue();
         pnlConversacion.mostrarMensaje(textField.getText(), "E");
-        ctrl.enviarMensaje(0, textField.getText());
         String mensaje = userSend + "*" + userRecibe + "*" + textField.getText();
+        ctrl.enviarMensaje(0, mensaje);
         textField.setText("");
     };
 
