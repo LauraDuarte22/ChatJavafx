@@ -6,8 +6,13 @@
 package interfaz;
 
 import controlador.ControladorClient;
+import javafx.application.Platform;
+import javafx.beans.value.ChangeListener;
+import javafx.beans.value.ObservableValue;
+import javafx.event.ActionEvent;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
+import javafx.event.EventType;
 import javafx.geometry.HPos;
 import javafx.scene.control.Button;
 import javafx.scene.control.ComboBox;
@@ -75,8 +80,30 @@ public class PanelUsuarios {
         String[] user = msg.split("\\*");
         users = FXCollections.observableArrayList(user);
         cbUsuariosCreados = new ComboBox(users);
+        cbUsuariosCreados.valueProperty().addListener(new ChangeListener<String>() {
+            @Override
+            public void changed(ObservableValue<? extends String> observable, String oldValue, String newValue) {
+                // If the condition is not met and the new value is not null: "rollback"
+                if (newValue != null) {
+
+                    Platform.runLater(new Runnable() {  
+                        @Override
+                        public void run() {
+                            verMensajes();
+                        }
+                    });
+                }
+            }
+        });
         cbUsuariosCreados.setPrefSize(150, 5);
         areas.add(cbUsuariosCreados, 1, 0);
+  
+    }
+
+    public void verMensajes() {
+        String usuario = cbUsuariosCreados.getValue().toString();
+        System.out.println(usuario);
+        ctrl.enviarMensaje(4, usuario + "*" + pnlRegistro.user);
     }
 
 }

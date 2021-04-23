@@ -54,12 +54,17 @@ public class MundoClient {
                             public void run() {
                                 try {
                                     String msj = inObjectBuffer.readUTF();
+                                    String vec[] = msj.split("\\*");
                                     char tipo = msj.charAt(0);
-//                                    String arr[] = msj.split("\\*");
                                     if (tipo == '3') {
                                         ctrl.mostrarUsuarios(msj.replaceAll(Character.toString(tipo), ""));
                                     }
-                                    ctrl.recibirMensaje(desencriptar(msj));
+                                    if (tipo == '4') {
+                                        for (int i = 1; i < vec.length; i++) {
+                                            ctrl.recibirMensaje(desencriptar(vec[i]));
+                                        }
+                                    }
+
                                 } catch (IOException ex) {
                                     Logger.getLogger(MundoClient.class.getName()).log(Level.SEVERE, null, ex);
                                 }
@@ -89,6 +94,9 @@ public class MundoClient {
                     String[] msg = mensaje.split("\\*");
                     mensaje = tipo + "*" + msg[0] + "*" + msg[1] + "*" + encriptar(msg[2]);
                     outBuffer.writeUTF((mensaje));
+                } else {
+                    System.out.println(mensaje);
+                    outBuffer.writeUTF((tipo + "*" + mensaje));
                 }
             }
         } catch (UnknownHostException e) {

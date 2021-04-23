@@ -53,7 +53,9 @@ public class MySql {
         connection.close();
     }
 
-    /* Métodos de comportamiento CRUD */
+    /*Métodos de comportamiento CRUD
+
+    /
     /**
      * Utilizada para INSERT, UPDATE, o DELETE.
      *
@@ -119,16 +121,28 @@ public class MySql {
         statement.executeUpdate(sql);
     }
 
-    public void showMsg(String nick) throws SQLException {
+    public String showMsg(String nickEnvia, String nickRecibe) throws SQLException {
         this.statement = connect().createStatement();
-        String id = "SELECT Id_User FROM users WHERE nick ='" + nick + "'";
+        String id = "SELECT Id_User FROM users WHERE nick = '" + nickEnvia + "'";
         this.rst = statement.executeQuery(id);
         while (rst.next()) {
             id = rst.getString("Id_User");
 
         }
-        String sql = "SELECT msg, nickSend FROM msg WHERE Id_User=" + id;
-
+        String sql = "SELECT msg FROM msg WHERE Id_User=" + id + " AND nickSend = '" + nickRecibe + "'";
+        System.out.println(id);
+        this.rst = statement.executeQuery(sql);
+        String msgSaved = "";
+        while (rst.next()) {
+            msgSaved += rst.getString("msg") + "*";
+        }
+        return msgSaved;
     }
 
+    public void borrarMensajes(String nickRecibe, String nickEnvia) throws SQLException {
+        this.statement = connect().createStatement();
+        String sql = "DELETE FROM msg WHERE nickReceived = '" + nickRecibe + "' AND nickSend = '" + nickEnvia + "'";
+        statement.executeUpdate(sql);
+
+    }
 }

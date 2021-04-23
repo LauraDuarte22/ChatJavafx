@@ -51,9 +51,13 @@ public class PanelConversacion {
         scroll.setVbarPolicy(ScrollBarPolicy.AS_NEEDED);
 
     }
+    
+ 
 
     public void mostrarMensaje(String mensaje, String origen) {
+
         Label label = new Label(mensaje);
+
         label.setWrapText(true);
         label.setPrefWidth(145.);
         if (origen.equals("E")) {

@@ -37,14 +37,19 @@ public class ControladorClient {
     }
 
     public void recibirMensaje(String msg) {
-        pnlConversacion.mostrarMensaje("SERVER " + msg, "R");
+        pnlConversacion.mostrarMensaje(msg, "R");
+
     }
 
     public void enviarMensaje(int tipo, String msg) {
+        if (tipo == 4) {
+            System.out.println("monda: " + msg);
+        }
         mundo.socket(tipo, msg);
     }
 
     public void mostrarUsuarios(String msg) {
         pnlUsuarios.showUser(msg);
+
     }
 }

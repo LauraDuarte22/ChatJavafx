@@ -64,7 +64,8 @@ public class MundoServer {
                                     case '0':
                                         mySql.saveMsg(arr[1], arr[2], arr[3]);
                                         msjServer = "Mensaje enviado por: " + arr[1] + " para: " + arr[2] + " msj:  " + arr[3];
-                                        msj=arr[3];
+                                        msj = arr[3];
+                                        socket(msj);
                                         break;
                                     case '1':
                                         boolean exist = mySql.verificarUser(arr[1]);
@@ -83,13 +84,22 @@ public class MundoServer {
                                     case '3':
                                         String users = mySql.selectUsers(arr[1]);
                                         msj = tipo + users;
-                                        msjServer = "Usarios disponibles para enviar mensajes \n" + users.replace("*", "\n");
+                                        msjServer = "Usuarios disponibles para enviar mensajes \n" + users.replace("*", "\n");
+                                        socket(msj);
+                                        break;
+
+                                    case '4':
+                                        String temp = mySql.showMsg(arr[2], arr[1]);
+                                        if (!temp.equals("")) {
+                                            msj = tipo + "*" + mySql.showMsg(arr[2], arr[1]);
+                                            socket(msj);
+                                        }
+                                        mySql.borrarMensajes(arr[2], arr[1]);
                                         break;
                                     default:
                                         break;
                                 }
                                 ctrl.recibirMensaje(msjServer);
-                                socket(msj);
                                 socket.close();
                             } catch (IOException | SQLException ex) {
                                 Logger.getLogger(MundoServer.class.getName()).log(Level.SEVERE, null, ex);

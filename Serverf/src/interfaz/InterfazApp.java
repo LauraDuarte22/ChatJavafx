@@ -36,21 +36,16 @@ public class InterfazApp extends Application {
     public void start(Stage primaryStage) throws Exception {
         primaryStage.setTitle("Server");
         BorderPane root = new BorderPane();
-      
+
         ctrl = new ControladorServer();
 
-        if (ctrl.connect() == null) {
-            System.out.println("Mysql: La conexion no fue establecida...");
-        } else {
-            JOptionPane.showMessageDialog(null, "Mysql: La conexion fue establecida...");
-        }
-        
+         ctrl.connect(); 
+      
+         
         pnlConversacion = new PanelConversacion(ctrl);
         root.setPadding(new Insets(5, 5, 5, 5));
         root.setTop(pnlConversacion.label);
         root.setCenter(pnlConversacion.textArea);
-       
-       
 
         scene1 = new Scene(root, 300, 500);
         scene1.getStylesheets().add(getClass().getResource("styles.css").toExternalForm());
