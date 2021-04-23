@@ -42,9 +42,6 @@ public class ControladorClient {
     }
 
     public void enviarMensaje(int tipo, String msg) {
-        if (tipo == 4) {
-            System.out.println("monda: " + msg);
-        }
         mundo.socket(tipo, msg);
     }
 
@@ -52,4 +49,10 @@ public class ControladorClient {
         pnlUsuarios.showUser(msg);
 
     }
+
+    public void mensajeError(String msg) {
+        pnlRegistro.errorRegistro(msg);
+        pnlRegistro.errorIngreso(msg);
+    }
+    
 }

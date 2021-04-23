@@ -56,6 +56,9 @@ public class MundoClient {
                                     String msj = inObjectBuffer.readUTF();
                                     String vec[] = msj.split("\\*");
                                     char tipo = msj.charAt(0);
+                                    if (tipo == '1' || tipo == '5') {
+                                        ctrl.mensajeError(vec[1]);
+                                    }
                                     if (tipo == '3') {
                                         ctrl.mostrarUsuarios(msj.replaceAll(Character.toString(tipo), ""));
                                     }
@@ -86,7 +89,7 @@ public class MundoClient {
             ip = InetAddress.getLocalHost();
             try (Socket server = new Socket(ip.getHostAddress(), portSend)) {
                 DataOutputStream outBuffer = new DataOutputStream(server.getOutputStream());
-                if (tipo == 1 || tipo == 2 || tipo == 3) {
+                if (tipo == 1 || tipo == 2 || tipo == 3 || tipo == 5) {
                     ip = InetAddress.getLocalHost();
                     mensaje = tipo + "*" + mensaje + "*" + ip.getHostAddress();
                     outBuffer.writeUTF((mensaje));

@@ -8,6 +8,8 @@ package interfaz;
 import controlador.ControladorClient;
 import javafx.event.ActionEvent;
 import javafx.geometry.Insets;
+import javafx.scene.control.Alert;
+import javafx.scene.control.Alert.AlertType;
 import javafx.scene.control.Button;
 import javafx.scene.control.Label;
 import javafx.scene.control.TextField;
@@ -30,7 +32,9 @@ public class PanelRegistro {
     public BorderPane registro;
     public Button btnRegistro;
     public String user;
-
+    public boolean usuarioExistente;
+    public boolean usuarioRegistrado;
+    
     public PanelRegistro(ControladorClient ctrl) {
         this.ctrl = ctrl;
         hb = new HBox();
@@ -57,7 +61,30 @@ public class PanelRegistro {
     }
 
     public void insertUser(String usuario) {
+        usuarioExistente = true;
         ctrl.enviarMensaje(1, usuario);
+        user = usuario;
+        txtUserName.setText("");
+    }
+
+    public void errorRegistro(String msg) {
+        usuarioExistente = false;
+        Alert fail= new Alert(AlertType.ERROR);
+        fail.setHeaderText(null);
+        fail.setContentText(msg);
+        fail.showAndWait();    
+    }
+    public void errorIngreso(String msg){
+        usuarioRegistrado = true;
+        Alert fail= new Alert(AlertType.ERROR);
+        fail.setHeaderText(null);
+        fail.setContentText(msg);
+        fail.showAndWait();  
+    }
+    
+    public void registrarUsuario(String usuario){
+        usuarioRegistrado = false;
+        ctrl.enviarMensaje(5, usuario);
         user = usuario;
         txtUserName.setText("");
     }

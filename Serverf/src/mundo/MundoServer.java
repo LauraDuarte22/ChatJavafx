@@ -70,7 +70,7 @@ public class MundoServer {
                                     case '1':
                                         boolean exist = mySql.verificarUser(arr[1]);
                                         if (exist == false) {
-                                            mySql.insertUser(arr[1], arr[2]);
+                                            socket(tipo + "*Usuario NO existe");
                                         } else {
                                             mySql.updateIp(arr[1], arr[2]);
                                             mySql.updateEstado(arr[1], "TRUE");
@@ -95,6 +95,15 @@ public class MundoServer {
                                             socket(msj);
                                         }
                                         mySql.borrarMensajes(arr[2], arr[1]);
+                                        break;
+                                    case '5':
+                                        exist = mySql.verificarUser(arr[1]);
+                                        if (exist == true) {
+                                            socket(tipo + "*Usuario ya existe");
+                                        } else {
+                                            mySql.insertUser(arr[1], arr[2]);
+                                        }
+                                        msjServer = "Usuario ingresado: " + arr[1];
                                         break;
                                     default:
                                         break;

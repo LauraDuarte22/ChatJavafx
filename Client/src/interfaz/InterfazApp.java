@@ -35,8 +35,6 @@ public class InterfazApp extends Application {
     private PanelRegistro pnlRegistro;
     private PanelUsuarios pnlUsuarios;
     private ControladorClient ctrl;
-    private TextArea textArea;
-    private TextField textField;
     private Scene scene1, scene2;
 
     @Override
@@ -58,17 +56,22 @@ public class InterfazApp extends Application {
         scene1 = new Scene(pnlRegistro.registro);
 
         pnlRegistro.btnLogin.setOnAction((ActionEvent event) -> {
-            primaryStage.setScene(scene2);
             pnlRegistro.insertUser(pnlRegistro.txtUserName.getText());
-            pnlUsuarios.requestUser();
-            pnlConversacion.grid.getChildren().clear();
+            if (pnlRegistro.usuarioExistente == true) {
+                primaryStage.setScene(scene2);
+                pnlUsuarios.requestUser();
+                pnlConversacion.grid.getChildren().clear();
+            }
+
         });
 
         pnlRegistro.btnRegistro.setOnAction((ActionEvent event) -> {
-            primaryStage.setScene(scene2);
-            pnlRegistro.insertUser(pnlRegistro.txtUserName.getText());
-            pnlUsuarios.requestUser();
-            pnlConversacion.grid.getChildren().clear();
+            pnlRegistro.registrarUsuario(pnlRegistro.txtUserName.getText());
+            if (pnlRegistro.usuarioRegistrado = false) {
+                primaryStage.setScene(scene2);
+                pnlUsuarios.requestUser();
+                pnlConversacion.grid.getChildren().clear();
+            }
         });
 
         pnlUsuarios.btn.setOnAction((ActionEvent event) -> {
