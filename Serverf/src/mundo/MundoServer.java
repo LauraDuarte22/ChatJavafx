@@ -64,8 +64,7 @@ public class MundoServer {
                                     case '0':
                                         mySql.saveMsg(arr[1], arr[2], arr[3]);
                                         msjServer = "Mensaje enviado por: " + arr[1] + " para: " + arr[2] + " msj:  " + arr[3];
-                                        msj = arr[3];
-                                        socket(msj);
+                                        msj = tipo + "*" + arr[3];
                                         break;
                                     case '1':
                                         boolean exist = mySql.verificarUser(arr[1]);
@@ -74,8 +73,9 @@ public class MundoServer {
                                         } else {
                                             mySql.updateIp(arr[1], arr[2]);
                                             mySql.updateEstado(arr[1], "TRUE");
+                                            msjServer = "Usuario ingresado: " + arr[1];
+                                            socket("A");
                                         }
-                                        msjServer = "Usuario ingresado: " + arr[1];
                                         break;
                                     case '2':
                                         mySql.updateEstado(arr[1], "FALSE");
@@ -102,8 +102,10 @@ public class MundoServer {
                                             socket(tipo + "*Usuario ya existe");
                                         } else {
                                             mySql.insertUser(arr[1], arr[2]);
+                                            msjServer = "Usuario registrado: " + arr[1];
+                                            socket("A");
                                         }
-                                        msjServer = "Usuario ingresado: " + arr[1];
+
                                         break;
                                     default:
                                         break;

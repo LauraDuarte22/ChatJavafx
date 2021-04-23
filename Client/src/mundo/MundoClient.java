@@ -23,7 +23,7 @@ import javafx.application.Platform;
  * @author admin
  */
 public class MundoClient {
-
+    
     private InetAddress ip;
     private final int portSend = 5050;
     private final int portListen = 5000;
@@ -33,10 +33,10 @@ public class MundoClient {
     ServerSocket client;
     DataInputStream inObjectBuffer;
     Socket socket;
-
+    
     public MundoClient(ControladorClient ctrl) {
         this.ctrl = ctrl;
-
+        
         hilo = new Thread() {
             public void run() {
                 try {
@@ -47,7 +47,7 @@ public class MundoClient {
                             Thread.sleep(100);
                             socket = client.accept();
                             inObjectBuffer = new DataInputStream(socket.getInputStream());
-
+                            
                         } catch (InterruptedException ex) {
                         }
                         Platform.runLater(new Runnable() {
@@ -56,18 +56,25 @@ public class MundoClient {
                                     String msj = inObjectBuffer.readUTF();
                                     String vec[] = msj.split("\\*");
                                     char tipo = msj.charAt(0);
-                                    if (tipo == '1' || tipo == '5') {
-                                        ctrl.mensajeError(vec[1]);
+                                    if (tipo == '1') {
+                                        ctrl.mensajeError(vec[1], true);
+                                    }
+                                    if (tipo == '5') {
+                                        ctrl.mensajeError(vec[1], false);
                                     }
                                     if (tipo == '3') {
                                         ctrl.mostrarUsuarios(msj.replaceAll(Character.toString(tipo), ""));
                                     }
                                     if (tipo == '4') {
-                                        for (int i = 1; i < vec.length; i++) {
+                                        for (int i = vec.length-1; i > 0; i--) {
                                             ctrl.recibirMensaje(desencriptar(vec[i]));
                                         }
                                     }
-
+                                    if (tipo == 'A') {
+                                        ctrl.metodoPrueba();
+                                    }
+                                    
+                                    
                                 } catch (IOException ex) {
                                     Logger.getLogger(MundoClient.class.getName()).log(Level.SEVERE, null, ex);
                                 }
@@ -79,7 +86,7 @@ public class MundoClient {
                 }
             }
         };
-
+        
         hilo.start();
     }
 
@@ -108,7 +115,7 @@ public class MundoClient {
             JOptionPane.showMessageDialog(null, "socket() : IOException: " + e.getMessage());
         }
     }
-
+    
     public String encriptar(String msg) {
         String encriptado = "";
         for (char ch : msg.toCharArray()) {
@@ -116,7 +123,7 @@ public class MundoClient {
         }
         return encriptado;
     }
-
+    
     public String desencriptar(String msg) {
         String desencriptado = "";
         for (char ch : msg.toCharArray()) {

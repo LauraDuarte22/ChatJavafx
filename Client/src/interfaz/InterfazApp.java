@@ -36,9 +36,11 @@ public class InterfazApp extends Application {
     private PanelUsuarios pnlUsuarios;
     private ControladorClient ctrl;
     private Scene scene1, scene2;
+    private Stage primaryStage;
 
     @Override
     public void start(Stage primaryStage) throws Exception {
+        this.primaryStage = primaryStage;
         ctrl = new ControladorClient();
         BorderPane root = new BorderPane();
 
@@ -52,26 +54,19 @@ public class InterfazApp extends Application {
         root.setBottom(pnlEnviar.areas);
         root.setCenter(pnlConversacion.scroll);
 
-        ctrl.conectar(pnlConversacion, pnlEnviar, pnlRegistro, pnlUsuarios);
+        ctrl.conectar(pnlConversacion, pnlEnviar, pnlRegistro, pnlUsuarios,this);
         scene1 = new Scene(pnlRegistro.registro);
 
         pnlRegistro.btnLogin.setOnAction((ActionEvent event) -> {
             pnlRegistro.insertUser(pnlRegistro.txtUserName.getText());
-            if (pnlRegistro.usuarioExistente == true) {
-                primaryStage.setScene(scene2);
-                pnlUsuarios.requestUser();
-                pnlConversacion.grid.getChildren().clear();
-            }
+
 
         });
 
         pnlRegistro.btnRegistro.setOnAction((ActionEvent event) -> {
             pnlRegistro.registrarUsuario(pnlRegistro.txtUserName.getText());
-            if (pnlRegistro.usuarioRegistrado = false) {
-                primaryStage.setScene(scene2);
-                pnlUsuarios.requestUser();
-                pnlConversacion.grid.getChildren().clear();
-            }
+
+            
         });
 
         pnlUsuarios.btn.setOnAction((ActionEvent event) -> {
@@ -92,6 +87,12 @@ public class InterfazApp extends Application {
             System.exit(0);
         });
 
+    }
+
+    public void iniciarChat() {
+        primaryStage.setScene(scene2);
+        pnlUsuarios.requestUser();
+        pnlConversacion.grid.getChildren().clear();
     }
 
     public static void main(String[] args) {
