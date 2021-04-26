@@ -5,6 +5,10 @@
  */
 package interfaz;
 
+/**
+ *
+ * @author mateo
+ */
 import controlador.ControladorServer;
 import javafx.scene.control.Label;
 import javafx.scene.control.TextArea;
@@ -16,25 +20,22 @@ import javafx.scene.text.FontWeight;
  *
  * @author admin
  */
-public class PanelConversacion {
+public class PanelExcepciones {
 
     public TextArea textArea;
     public Label label;
-    private ControladorServer ctrl;
 
-    public PanelConversacion(ControladorServer ctrl) {
-        this.ctrl = ctrl;
-        label = new Label("Conversación encriptada");
+    public PanelExcepciones() {
+        label = new Label("Excepciones");
         Font font = Font.font("verdana", FontWeight.BLACK, FontPosture.REGULAR, 20);
         label.setFont(font);
         textArea = new TextArea();
         textArea.setEditable(false);
         textArea.setWrapText(true);
-        textArea.setPrefWidth(285);
-
+        textArea.setPrefWidth(290);
     }
 
-    public void mostrarMensaje(String mensaje) {
+    public void mostrarError(String mensaje) {
         textArea.appendText(mensaje + "\n");
     }
 

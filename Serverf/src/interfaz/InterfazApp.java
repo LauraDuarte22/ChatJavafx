@@ -12,6 +12,7 @@ import javafx.application.Platform;
 import javafx.geometry.Insets;
 import javafx.scene.Scene;
 import javafx.scene.layout.BorderPane;
+import javafx.scene.layout.FlowPane;
 import javafx.stage.Stage;
 import javafx.stage.WindowEvent;
 import javax.swing.JOptionPane;
@@ -30,38 +31,43 @@ public class InterfazApp extends Application {
      */
     private PanelConversacion pnlConversacion;
     private ControladorServer ctrl;
-    private Scene scene1, scene2;
-
+    private Scene scene1;
+    private PanelExcepciones pnlExcepciones;
+    
     @Override
     public void start(Stage primaryStage) throws Exception {
         primaryStage.setTitle("Server");
         BorderPane root = new BorderPane();
-
+        
         ctrl = new ControladorServer();
-
-         ctrl.connect(); 
-      
-         
+        
+        ctrl.connect();
+        
         pnlConversacion = new PanelConversacion(ctrl);
+        pnlExcepciones = new PanelExcepciones();
         root.setPadding(new Insets(5, 5, 5, 5));
         root.setTop(pnlConversacion.label);
         root.setCenter(pnlConversacion.textArea);
-
+        FlowPane buttons = new FlowPane();
+        buttons.getChildren().addAll(pnlExcepciones.label, pnlExcepciones.textArea);
+        root.setBottom(buttons);
+        
         scene1 = new Scene(root, 300, 500);
         scene1.getStylesheets().add(getClass().getResource("styles.css").toExternalForm());
-
+        
         primaryStage.setScene(scene1);
         primaryStage.setOnCloseRequest((WindowEvent e) -> {
             Platform.exit();
             System.exit(0);
         });
-        ctrl.conectar(pnlConversacion);
+        ctrl.conectar(pnlConversacion, pnlExcepciones);
         primaryStage.show();
-
+        primaryStage.setResizable(false);
+        
     }
-
+    
     public static void main(String[] args) {
         launch(args);
     }
-
+    
 }

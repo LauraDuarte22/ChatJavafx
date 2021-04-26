@@ -114,18 +114,12 @@ public class MundoServer {
                                 ctrl.recibirMensaje(msjServer);
                                 socket.close();
                             } catch (IOException | SQLException ex) {
-                                Alert fail = new Alert(Alert.AlertType.ERROR);
-                                fail.setHeaderText(null);
-                                fail.setContentText(ex.toString());
-                                fail.showAndWait();
+                                ctrl.RecibirError(ex.getMessage());
                             }
                         });
                     }
                 } catch (IOException ex) {
-                    Alert fail = new Alert(Alert.AlertType.ERROR);
-                    fail.setHeaderText(null);
-                    fail.setContentText(ex.toString());
-                    fail.showAndWait();
+                    ctrl.RecibirError(ex.getMessage());
                 }
             }
         };
@@ -141,15 +135,9 @@ public class MundoServer {
                 outBuffer.writeUTF(mensaje);
             }
         } catch (UnknownHostException e) {
-            Alert fail = new Alert(Alert.AlertType.ERROR);
-            fail.setHeaderText(null);
-            fail.setContentText(e.getMessage());
-            fail.showAndWait();
+            ctrl.RecibirError(e.getMessage());
         } catch (IOException e) {
-            Alert fail = new Alert(Alert.AlertType.ERROR);
-            fail.setHeaderText(null);
-            fail.setContentText(e.getMessage());
-            fail.showAndWait();
+            ctrl.RecibirError(e.getMessage());
         }
     }
 
