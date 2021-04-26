@@ -17,6 +17,7 @@ import javax.swing.JOptionPane;
 import controlador.ControladorServer;
 import java.sql.SQLException;
 import javafx.application.Platform;
+import javafx.scene.control.Alert;
 
 /**
  *
@@ -113,12 +114,18 @@ public class MundoServer {
                                 ctrl.recibirMensaje(msjServer);
                                 socket.close();
                             } catch (IOException | SQLException ex) {
-                                Logger.getLogger(MundoServer.class.getName()).log(Level.SEVERE, null, ex);
+                                Alert fail = new Alert(Alert.AlertType.ERROR);
+                                fail.setHeaderText(null);
+                                fail.setContentText(ex.toString());
+                                fail.showAndWait();
                             }
                         });
                     }
                 } catch (IOException ex) {
-                    Logger.getLogger(MundoServer.class.getName()).log(Level.SEVERE, null, ex);
+                    Alert fail = new Alert(Alert.AlertType.ERROR);
+                    fail.setHeaderText(null);
+                    fail.setContentText(ex.toString());
+                    fail.showAndWait();
                 }
             }
         };
@@ -134,9 +141,15 @@ public class MundoServer {
                 outBuffer.writeUTF(mensaje);
             }
         } catch (UnknownHostException e) {
-            JOptionPane.showMessageDialog(null, "socket() : UnknownHostException: " + e.getMessage());
+            Alert fail = new Alert(Alert.AlertType.ERROR);
+            fail.setHeaderText(null);
+            fail.setContentText(e.getMessage());
+            fail.showAndWait();
         } catch (IOException e) {
-            JOptionPane.showMessageDialog(null, "socket() : IOException: " + e.getMessage());
+            Alert fail = new Alert(Alert.AlertType.ERROR);
+            fail.setHeaderText(null);
+            fail.setContentText(e.getMessage());
+            fail.showAndWait();
         }
     }
 
