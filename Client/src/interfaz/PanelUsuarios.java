@@ -18,6 +18,7 @@ import javafx.scene.control.Label;
 import javafx.scene.control.TextField;
 import javafx.scene.layout.ColumnConstraints;
 import javafx.scene.layout.GridPane;
+import javafx.scene.text.Font;
 
 /**
  *
@@ -57,10 +58,11 @@ public class PanelUsuarios {
         areas.getColumnConstraints().add(cc2);
 
         labelPara = new Label("Para: ");
+        labelPara.setFont(new Font("Arial", 11));
 
         btn = new Button();
         btn.setText("Cerrar Sesión");
-
+        btn.setFont(new Font("Arial", 13));
         areas.add(btn, 2, 0);
 
         areas.add(labelPara, 0, 0);
@@ -84,18 +86,18 @@ public class PanelUsuarios {
             public void changed(ObservableValue<? extends String> observable, String oldValue, String newValue) {
                 // If the condition is not met and the new value is not null: "rollback"
                 if (newValue != null) {
-                    if(oldValue != newValue){
+                    if (oldValue != newValue) {
                         pnlConversacion.grid.getChildren().clear();
                     }
                     Platform.runLater(new Runnable() {
                         @Override
                         public void run() {
                             verMensajes();
-                            
+
                         }
                     });
                 }
-                
+
             }
         });
         cbUsuariosCreados.setPrefSize(150, 5);
